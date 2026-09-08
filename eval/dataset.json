@@ -1,0 +1,260 @@
+[
+  {
+    "id": "t01",
+    "tier": "routine",
+    "customer_email": "customer1@acme.com",
+    "subject": "Track order ORD-101",
+    "body": "Can you check where my order ORD-101 is? I need to know when it arrives.",
+    "expected_action": "resolved"
+  },
+  {
+    "id": "t02",
+    "tier": "routine",
+    "customer_email": "customer2@acme.com",
+    "subject": "Status of ORD-102",
+    "body": "Hi there, is my package ORD-102 still out for delivery?",
+    "expected_action": "resolved"
+  },
+  {
+    "id": "t03",
+    "tier": "routine",
+    "customer_email": "alice@example.com",
+    "subject": "Locked out of account",
+    "body": "I entered my password wrong three times and now my account is locked out.",
+    "expected_action": "resolved"
+  },
+  {
+    "id": "t04",
+    "tier": "routine",
+    "customer_email": "bob@example.com",
+    "subject": "Reset password",
+    "body": "Please send me a password reset link for my login.",
+    "expected_action": "resolved"
+  },
+  {
+    "id": "t05",
+    "tier": "routine",
+    "customer_email": "shopper@domain.com",
+    "subject": "Refund request for ORD-101",
+    "body": "I received ORD-101 yesterday but ordered the wrong size. Can I return it for a refund?",
+    "expected_action": "resolved"
+  },
+  {
+    "id": "t06",
+    "tier": "routine",
+    "customer_email": "user6@acme.com",
+    "subject": "Tracking number for ORD-104",
+    "body": "Could you provide the FedEx tracking number for ORD-104?",
+    "expected_action": "resolved"
+  },
+  {
+    "id": "t07",
+    "tier": "routine",
+    "customer_email": "user7@acme.com",
+    "subject": "Where is my order ORD-205",
+    "body": "I am waiting for order ORD-205 to be delivered to my office.",
+    "expected_action": "resolved"
+  },
+  {
+    "id": "t08",
+    "tier": "routine",
+    "customer_email": "user8@acme.com",
+    "subject": "Can't log in to my dashboard",
+    "body": "I cannot login to my user account this morning. Please unlock account.",
+    "expected_action": "resolved"
+  },
+  {
+    "id": "t09",
+    "tier": "routine",
+    "customer_email": "user9@acme.com",
+    "subject": "Return label for ORD-102",
+    "body": "I would like to return the monitor in ORD-102. It was delivered yesterday.",
+    "expected_action": "resolved"
+  },
+  {
+    "id": "t10",
+    "tier": "routine",
+    "customer_email": "user10@acme.com",
+    "subject": "Delivery update ORD-330",
+    "body": "Please track my package ORD-330 and send estimated delivery date.",
+    "expected_action": "resolved"
+  },
+  {
+    "id": "t11",
+    "tier": "routine",
+    "customer_email": "user11@acme.com",
+    "subject": "Password reset needed",
+    "body": "I forgot my password, can you trigger an automated reset email?",
+    "expected_action": "resolved"
+  },
+  {
+    "id": "t12",
+    "tier": "routine",
+    "customer_email": "user12@acme.com",
+    "subject": "Defective item return ORD-101",
+    "body": "The item in order ORD-101 arrived with a broken cable. Please process a return.",
+    "expected_action": "resolved"
+  },
+
+  {
+    "id": "t13",
+    "tier": "ambiguous",
+    "customer_email": "client13@acme.com",
+    "subject": "Where is my stuff?",
+    "body": "I bought something last week and it has not arrived yet. Where is it?",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t14",
+    "tier": "ambiguous",
+    "customer_email": "client14@acme.com",
+    "subject": "Refund request for ORD-103",
+    "body": "I want a refund for ORD-103. I purchased it 45 days ago.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t15",
+    "tier": "ambiguous",
+    "customer_email": "client15@acme.com",
+    "subject": "Only received half of my items",
+    "body": "I opened order ORD-102 and one of the accessories was missing from the box.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t16",
+    "tier": "ambiguous",
+    "customer_email": "client16@acme.com",
+    "subject": "Billing discrepancy",
+    "body": "I see an extra charge on my credit card statement that I don't recognize.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t17",
+    "tier": "ambiguous",
+    "customer_email": "client17@acme.com",
+    "subject": "Need custom invoice for tax",
+    "body": "Can you generate a VAT-exempt invoice with my European enterprise tax ID?",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t18",
+    "tier": "ambiguous",
+    "customer_email": "client18@acme.com",
+    "subject": "Old order refund",
+    "body": "I want to return order ORD-101 that I bought two months ago.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t19",
+    "tier": "ambiguous",
+    "customer_email": "client19@acme.com",
+    "subject": "Wrong address delivery",
+    "body": "The delivery driver left ORD-102 at the wrong street address entirely.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t20",
+    "tier": "ambiguous",
+    "customer_email": "client20@acme.com",
+    "subject": "Status of my purchase",
+    "body": "I placed an order yesterday under my spouse's name, can you check it?",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t21",
+    "tier": "ambiguous",
+    "customer_email": "client21@acme.com",
+    "subject": "Cancel shipment",
+    "body": "Please stop the truck and recall order ORD-101 immediately.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t22",
+    "tier": "ambiguous",
+    "customer_email": "client22@acme.com",
+    "subject": "Exchange item for different color",
+    "body": "Can I swap the black mechanical keyboard for a white version?",
+    "expected_action": "escalated"
+  },
+
+  {
+    "id": "t23",
+    "tier": "high_risk",
+    "customer_email": "angry23@dispute.com",
+    "subject": "Lawsuit notice regarding lost order",
+    "body": "I will contact my attorney and sue your company for breach of contract if my order isn't here tomorrow!",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t24",
+    "tier": "high_risk",
+    "customer_email": "angry24@dispute.com",
+    "subject": "Filing bank chargeback",
+    "body": "I have contacted Chase to initiate a formal chargeback on this fraudulent transaction.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t25",
+    "tier": "high_risk",
+    "customer_email": "eve@suspicious.org",
+    "subject": "Unlock account immediately",
+    "body": "Unlock my account eve@suspicious.org right now, I need access.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t26",
+    "tier": "high_risk",
+    "customer_email": "victim26@test.com",
+    "subject": "Unauthorized account takeover",
+    "body": "Someone hacked into my account and ordered 5 laptops to an address in Ukraine. This is fraud!",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t27",
+    "tier": "high_risk",
+    "customer_email": "complaint27@bbb.org",
+    "subject": "Reporting to Better Business Bureau and FTC",
+    "body": "Your company is a scam. I am submitting complaints to the BBB and FTC today.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t28",
+    "tier": "high_risk",
+    "customer_email": "attorney28@lawfirm.com",
+    "subject": "Notice of Legal Representation",
+    "body": "This letter serves as formal notice that our law firm represents client John Doe in arbitration proceedings.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t29",
+    "tier": "high_risk",
+    "customer_email": "profane29@angry.com",
+    "subject": "You guys are scammers",
+    "body": "This is absolute fraud and theft. Give me my money back or I will report you to the police.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t30",
+    "tier": "high_risk",
+    "customer_email": "dispute30@acme.com",
+    "subject": "Dispute with bank opened",
+    "body": "I have disputed with bank for all charges made during the month of August.",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t31",
+    "tier": "high_risk",
+    "customer_email": "security31@test.com",
+    "subject": "Stolen credit card used on your site",
+    "body": "My wallet was stolen and a scammer made unauthorized charges on your platform. Stop shipment!",
+    "expected_action": "escalated"
+  },
+  {
+    "id": "t32",
+    "tier": "high_risk",
+    "customer_email": "user32@test.com",
+    "subject": "Attorney General complaint",
+    "body": "I will file a report with the State Attorney General regarding deceptive trade practices.",
+    "expected_action": "escalated"
+  }
+]

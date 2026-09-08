@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Ticket Triage Ops Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 font-sans flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4 shadow-sm">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow">
+                    🤖
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900">Support Ticket Triage Agent — Ops Center</h1>
+                    <p class="text-xs text-slate-500">Autonomous Resolution & Human-in-the-Loop Escalation Pipeline</p>
+                </div>
+            </div>
+            <div id="stats-banner" class="flex gap-4 text-xs">
+                <div class="bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg">
+                    <span class="text-slate-400">Total:</span> <span id="stat-total" class="font-bold">0</span>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg">
+                    <span>Resolved:</span> <span id="stat-resolved" class="font-bold">0</span> (<span id="stat-rate">0%</span>)
+                </div>
+                <div class="bg-amber-50 border border-amber-200 text-amber-800 px-3 py-1.5 rounded-lg">
+                    <span>Escalated:</span> <span id="stat-escalated" class="font-bold">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto flex-1 w-full p-6 flex flex-col gap-6">
+
+        <!-- Ingest New Ticket -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <h2 class="text-sm font-bold text-slate-900 mb-2">Simulate Incoming Support Ticket</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+                <input id="in-email" type="email" placeholder="customer@example.com" value="user@acme.com" class="border border-slate-200 px-3 py-2 rounded-lg text-xs outline-none focus:border-blue-500" />
+                <input id="in-subject" type="text" placeholder="Subject" value="Where is my order ORD-101?" class="border border-slate-200 px-3 py-2 rounded-lg text-xs outline-none focus:border-blue-500 md:col-span-2" />
+            </div>
+            <textarea id="in-body" rows="2" placeholder="Ticket body..." class="w-full border border-slate-200 px-3 py-2 rounded-lg text-xs outline-none focus:border-blue-500 mb-3">Hi, I placed order ORD-101 three days ago and haven't received tracking yet. Can you give me an update?</textarea>
+            
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-wrap gap-1.5 text-[11px]">
+                    <span class="text-slate-400 self-center">Pre-fill:</span>
+                    <button onclick="setSample('user@test.com', 'Where is my order ORD-101?', 'Hi, tracking update for ORD-101 please?')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded">🚚 Routine Order</button>
+                    <button onclick="setSample('bob@example.com', 'Account locked', 'I forgot my password and my account is locked.')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded">🔐 Password Reset</button>
+                    <button onclick="setSample('customer@shop.com', 'Refund request ORD-103', 'I want a full refund for ORD-103. I bought it 2 months ago.')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded">⚠️ Expired Return</button>
+                    <button onclick="setSample('angry@client.com', 'Lawyer notice', 'I will sue your company and contact my attorney if this is not resolved!')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 px-2.5 py-1 rounded border border-rose-200">🚨 Legal Threat</button>
+                </div>
+                <button onclick="submitTicket()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-5 py-2 rounded-lg transition shadow">
+                    Triage Ticket
+                </button>
+            </div>
+        </div>
+
+        <!-- Triage Columns -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
+            
+            <!-- Resolved Column -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                        <h3 class="font-bold text-sm text-slate-900">Autonomously Resolved</h3>
+                    </div>
+                    <span id="resolved-badge" class="text-xs bg-emerald-50 text-emerald-700 font-mono px-2 py-0.5 rounded">0 tickets</span>
+                </div>
+                <div id="resolved-list" class="space-y-3 overflow-y-auto max-h-[460px] flex-1">
+                    <p class="text-xs text-slate-400 italic">No resolved tickets yet.</p>
+                </div>
+            </div>
+
+            <!-- Escalated Column -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-amber-500 animate-pulse"></span>
+                        <h3 class="font-bold text-sm text-slate-900">Human Escalation Queue</h3>
+                    </div>
+                    <span id="escalated-badge" class="text-xs bg-amber-50 text-amber-700 font-mono px-2 py-0.5 rounded">0 tickets</span>
+                </div>
+                <div id="escalated-list" class="space-y-3 overflow-y-auto max-h-[460px] flex-1">
+                    <p class="text-xs text-slate-400 italic">No escalated tickets waiting for human review.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        function setSample(email, subject, body) {
+            document.getElementById('in-email').value = email;
+            document.getElementById('in-subject').value = subject;
+            document.getElementById('in-body').value = body;
+        }
+
+        async function fetchQueue() {
+            try {
+                const [statsRes, ticketsRes] = await Promise.all([
+                    fetch('/queue/stats'),
+                    fetch('/tickets')
+                ]);
+                const stats = await statsRes.json();
+                const tickets = await ticketsRes.json();
+
+                document.getElementById('stat-total').innerText = stats.total_tickets;
+                document.getElementById('stat-resolved').innerText = stats.resolved_count;
+                document.getElementById('stat-rate').innerText = stats.resolution_rate + '%';
+                document.getElementById('stat-escalated').innerText = stats.escalated_count;
+                document.getElementById('resolved-badge').innerText = stats.resolved_count + ' tickets';
+                document.getElementById('escalated-badge').innerText = stats.escalated_count + ' tickets';
+
+                const resolvedList = document.getElementById('resolved-list');
+                const escalatedList = document.getElementById('escalated-list');
+
+                const resolvedTickets = tickets.filter(t => t.status === 'resolved');
+                const escalatedTickets = tickets.filter(t => t.status === 'escalated');
+
+                resolvedList.innerHTML = resolvedTickets.length ? resolvedTickets.map(t => `
+                    <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 text-xs">
+                        <div class="flex justify-between font-semibold text-slate-800 mb-1">
+                            <span>${escapeHtml(t.subject)}</span>
+                            <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px]">Conf: ${(t.confidence*100).toFixed(0)}%</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mb-2">From: ${escapeHtml(t.customer_email)} · Category: ${escapeHtml(t.category)}</p>
+                        <div class="bg-white p-2.5 rounded-lg border border-slate-200">
+                            <p class="text-[11px] text-emerald-800 font-medium">💬 Autonomous Reply:</p>
+                            <p class="text-[11px] text-slate-700 mt-1">${escapeHtml(t.resolution_text || '')}</p>
+                        </div>
+                    </div>
+                `).join('') : '<p class="text-xs text-slate-400 italic">No resolved tickets yet.</p>';
+
+                escalatedList.innerHTML = escalatedTickets.length ? escalatedTickets.map(t => `
+                    <div class="p-3.5 rounded-xl border border-amber-200 bg-amber-50/50 text-xs">
+                        <div class="flex justify-between font-semibold text-slate-800 mb-1">
+                            <span>${escapeHtml(t.subject)}</span>
+                            <span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[10px]">Escalated</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mb-2">From: ${escapeHtml(t.customer_email)}</p>
+                        <div class="bg-white p-2.5 rounded-lg border border-amber-200 mb-2">
+                            <p class="text-[11px] text-amber-900 font-semibold">⚠️ Escalation Reason:</p>
+                            <p class="text-[11px] text-slate-700 mt-0.5">${escapeHtml(t.escalation_reason || '')}</p>
+                            ${t.recommended_action ? `<p class="text-[11px] text-blue-700 font-medium mt-1">Recommended Action: ${escapeHtml(t.recommended_action)}</p>` : ''}
+                        </div>
+                        <div class="flex gap-2 justify-end pt-1">
+                            <button onclick="resolveEscalation(${t.id}, 'approve_resolution')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded text-[10px] font-medium transition">Approve Exception</button>
+                            <button onclick="resolveEscalation(${t.id}, 'manual_reply')" class="bg-slate-700 hover:bg-slate-800 text-white px-2.5 py-1 rounded text-[10px] font-medium transition">Send Manual Reply</button>
+                        </div>
+                    </div>
+                `).join('') : '<p class="text-xs text-slate-400 italic">No escalated tickets waiting.</p>';
+
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function submitTicket() {
+            const email = document.getElementById('in-email').value.trim();
+            const subject = document.getElementById('in-subject').value.trim();
+            const body = document.getElementById('in-body').value.trim();
+            if (!email || !subject || !body) return;
+
+            await fetch('/tickets', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({customer_email: email, subject: subject, body: body})
+            });
+            fetchQueue();
+        }
+
+        async function resolveEscalation(ticketId, action) {
+            const notes = prompt("Enter resolution notes for customer:", action === 'approve_resolution' ? "Exception approved by supervisor." : "Manual agent response.");
+            if (notes === null) return;
+
+            await fetch(`/tickets/${ticketId}/action`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({action: action, notes: notes})
+            });
+            fetchQueue();
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+        }
+
+        fetchQueue();
+        setInterval(fetchQueue, 5000);
+    </script>
+</body>
+</html>
