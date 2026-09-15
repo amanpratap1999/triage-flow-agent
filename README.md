@@ -5,14 +5,24 @@
   <img src="https://img.shields.io/badge/python-3.11+-blue.svg" alt="Python 3.11+" />
   <img src="https://img.shields.io/badge/FastAPI-0.110-009688.svg?logo=fastapi&logoColor=white" alt="FastAPI" />
   <img src="https://img.shields.io/badge/Decision%20Engine-Deterministic%20Graph-8B5CF6.svg" alt="Decision Engine" />
-  <img src="https://img.shields.io/badge/Tests-6%2F6%20Passing-brightgreen.svg" alt="Tests" />
+  <a href="https://github.com/amanpratap1999/triage-flow-agent/actions/workflows/ci.yml"><img src="https://github.com/amanpratap1999/triage-flow-agent/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
   <img src="https://img.shields.io/badge/False%20Resolution%20Rate-0.0%25-success.svg" alt="False Resolutions" />
   <img src="https://img.shields.io/badge/Routine%20Resolution-100.0%25-success.svg" alt="Routine Resolution" />
   <img src="https://img.shields.io/badge/Complex%20Escalation-100.0%25-success.svg" alt="Complex Escalation" />
   <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License" />
 </p>
 
-TriageFlow Agent is an autonomous customer support triage engine that resolves routine inquiries with tool-calling precision and safely escalates complex, ambiguous, or high-risk tickets to human supervisors with complete diagnostic context attached.
+> **Recruiter & Engineer TL;DR:** An autonomous incident triage and customer support agent powered by a deterministic decision graph state machine. Resolves routine inquiries via validated tool calling (orders, passwords, refunds) and safely routes complex edge cases to human queues with structured diagnostic telemetry — achieving 0.0% false resolutions.
+
+[💻 Run Locally in 30 Seconds](#-quickstart) • [🧠 System Architecture](#-system-architecture) • [📊 Benchmark Scorecard](#-benchmark-evaluation-scorecard) • [📡 API Reference](#-api-reference)
+
+---
+
+## 📸 Application Interface
+
+<p align="center">
+  <img src="assets/screenshots/dashboard.png" alt="TriageFlow Agent Ops Center" width="850" />
+</p>
 
 ---
 
